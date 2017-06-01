@@ -17,7 +17,7 @@ def cleanup(file):
         csvout.writerow(header)
         current = next(contacts)
         for person in contacts:
-            if current[57] != person[57]:
+            if current[57] != person[57] or current[57] == '':
                 csvout.writerow(current)
                 current = person
                 continue
