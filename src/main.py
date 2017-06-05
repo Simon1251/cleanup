@@ -115,7 +115,9 @@ def cleanup(file: object) -> None:
     deleted = 0
 
     out = open("people.csv", 'w', newline='')
+    archive = open("archive.csv", 'w', newline='')
     csv_out = csv.writer(out, delimiter=',', quotechar='"')
+    csv_deletions = csv.writer(archive, delimiter=',', quotechar='"')
     # noinspection PyTypeChecker
     with open(file, newline='') as csv_file:
         contacts = csv.reader(csv_file, delimiter=",", quotechar='"')
@@ -130,6 +132,7 @@ def cleanup(file: object) -> None:
                     break
             if empty:
                 print(current)
+                csv_deletions.writerow(current)
                 current = person
                 deleted += 1
                 continue
@@ -152,6 +155,7 @@ def cleanup(file: object) -> None:
 
         csv_out.writerow(current)
         out.close()
+        archive.close()
         print(f'{modified} modified contacts.')
         print(f'{deleted} deleted contacts.')
 
