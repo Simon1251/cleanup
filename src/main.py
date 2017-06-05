@@ -28,6 +28,10 @@ def merge(first: list, second: list) -> list:
     """
     new_contact = [None] * 92
     new_contact[77] = ""
+    while len(first) < 92:
+        first.append('')
+    while len(second) < 92:
+        second.append('')
     for i in range(0, 92):
         if i in phone_range:
             if len(first[i]) == 0:
@@ -48,59 +52,59 @@ def merge(first: list, second: list) -> list:
             continue
         new_contact[i] = first[i] if len(first[i]) > len(second[i]) else second[i]
 
-        if len(first[57]) == 0:
-            new_contact[57] = second[57]
-            new_contact[58] = second[58]
-            new_contact[59] = second[59]
-        elif len(second[57]) == 0:
-            new_contact[57] = first[57]
-            new_contact[58] = first[58]
-            new_contact[59] = first[59]
-        elif first[57] == second[57]:
-            new_contact[57] = first[57]
-            new_contact[58] = first[58]
-            new_contact[59] = first[59] if len(first[59]) > len(second[59]) else second[59]
-        else:
-            new_contact[57] = first[57]
-            new_contact[58] = first[58]
-            new_contact[59] = first[59]
-            new_contact[77] += " " + second[57]
+    if len(first[57]) == 0:
+        new_contact[57] = second[57]
+        new_contact[58] = second[58]
+        new_contact[59] = second[59]
+    elif len(second[57]) == 0:
+        new_contact[57] = first[57]
+        new_contact[58] = first[58]
+        new_contact[59] = first[59]
+    elif first[57] == second[57]:
+        new_contact[57] = first[57]
+        new_contact[58] = first[58]
+        new_contact[59] = first[59] if len(first[59]) > len(second[59]) else second[59]
+    else:
+        new_contact[57] = first[57]
+        new_contact[58] = first[58]
+        new_contact[59] = first[59]
+        new_contact[77] += " " + second[57]
 
-        if len(first[60]) == 0:
-            new_contact[60] = second[60]
-            new_contact[61] = second[61]
-            new_contact[62] = second[62]
-        elif len(second[60]) == 0:
-            new_contact[60] = first[60]
-            new_contact[61] = first[61]
-            new_contact[62] = first[62]
-        elif first[60] == second[60]:
-            new_contact[60] = first[60]
-            new_contact[61] = first[61]
-            new_contact[62] = first[62] if len(first[62]) > len(second[62]) else second[62]
-        else:
-            new_contact[60] = first[60]
-            new_contact[61] = first[61]
-            new_contact[62] = first[62]
-            new_contact[77] += " " + second[60]
+    if len(first[60]) == 0:
+        new_contact[60] = second[60]
+        new_contact[61] = second[61]
+        new_contact[62] = second[62]
+    elif len(second[60]) == 0:
+        new_contact[60] = first[60]
+        new_contact[61] = first[61]
+        new_contact[62] = first[62]
+    elif first[60] == second[60]:
+        new_contact[60] = first[60]
+        new_contact[61] = first[61]
+        new_contact[62] = first[62] if len(first[62]) > len(second[62]) else second[62]
+    else:
+        new_contact[60] = first[60]
+        new_contact[61] = first[61]
+        new_contact[62] = first[62]
+        new_contact[77] += " " + second[60]
 
-        if len(first[63]) == 0:
-            new_contact[63] = second[63]
-            new_contact[64] = second[64]
-            new_contact[65] = second[65]
-        elif len(second[63]) == 0:
-            new_contact[63] = first[63]
-            new_contact[64] = first[64]
-            new_contact[65] = first[65]
-        elif first[63] == second[63]:
-            new_contact[63] = first[63]
-            new_contact[64] = first[64]
-            new_contact[65] = first[65] if len(first[65]) > len(second[65]) else second[65]
-        else:
-            new_contact[63] = first[63]
-            new_contact[64] = first[64]
-            new_contact[65] = first[65]
-            new_contact[77] += " " + second[63]
+    if len(first[63]) == 0:
+        new_contact[63] = second[63]
+        new_contact[64] = second[64]
+        new_contact[65] = second[65]
+    elif len(second[63]) == 0:
+        new_contact[63] = first[63]
+        new_contact[64] = first[64]
+        new_contact[65] = first[65]
+    elif first[63] == second[63]:
+        new_contact[63] = first[63]
+        new_contact[64] = first[64]
+        new_contact[65] = first[65] if len(first[65]) > len(second[65]) else second[65]
+    else:
+        new_contact[63] = first[63]
+        new_contact[64] = first[64]
+        new_contact[65] = first[65]
+        new_contact[77] += " " + second[63]
 
     return new_contact
 
@@ -129,6 +133,7 @@ def cleanup(options: object) -> None:
         contacts = csv.reader(csv_file, delimiter=",", quotechar='"')
         header = next(contacts)
         csv_out.writerow(header)
+        csv_deletions.writerow(header)
         current = next(contacts)
         for person in contacts:
             if options.delete:
