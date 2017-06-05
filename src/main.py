@@ -1,3 +1,6 @@
+__author__ = "James Johnson"
+
+
 import csv
 import sys
 
@@ -105,8 +108,13 @@ def cleanup(file: object) -> None:
     :rtype None:
     :param file: 
     """
+
+    # Counts the number of modified contacts.
+    modified = 0
+
     out = open("people.csv", 'w', newline='')
     csv_out = csv.writer(out, delimiter=',', quotechar='"')
+    # noinspection PyTypeChecker
     with open(file, newline='') as csv_file:
         contacts = csv.reader(csv_file, delimiter=",", quotechar='"')
         header = next(contacts)
@@ -114,10 +122,13 @@ def cleanup(file: object) -> None:
         current = next(contacts)
         for person in contacts:
             if current[57] == person[57] and len(current[57]) > 0:
+                modified += 1
                 csv_out.writerow(merge(current, person))
                 current = next(contacts)
                 continue
-            elif current[1] == person[1] and current[2] == person[2] and current[3] == person[3] and len(current[1]) > 0 and len(current[3]) > 0:
+            elif current[1] == person[1] and current[2] == person[2] and current[3] == person[3] and len(current[1]) > 0\
+                    and len(current[3]) > 0:
+                modified += 1
                 csv_out.writerow(merge(current, person))
                 current = next(contacts)
                 continue
@@ -126,7 +137,9 @@ def cleanup(file: object) -> None:
                 current = person
                 continue
 
-    out.close()
+        csv_out.writerow(current)
+        out.close()
+        print("{} modified or deleted contacts.".format(modified))
 
 
 def main():
